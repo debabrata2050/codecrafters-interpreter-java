@@ -45,7 +45,7 @@ public class Main {
 
           default -> 
           {
-            System.err.printf("[line 1] Error: Unexpected character: %c%n", lineNumber + 1, c);
+            System.err.println("[line 1] Error: Unexpected character: "+ c);
             hasErrors = true;
           }
         }
