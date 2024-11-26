@@ -76,7 +76,9 @@ public class Main {
           }
           case '/' -> {
             if (idx + 1 < fileContents.length() && fileContents.charAt(idx + 1) == '/') {
-              break;
+              while (idx < fileContents.length() && fileContents.charAt(idx) != '\n') {
+                idx++;
+            }
             } else {
               System.out.println("SLASH / null");
             }
