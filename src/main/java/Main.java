@@ -31,9 +31,15 @@ public class Main {
     // Uncomment this block to pass the first stage
     // 
     if (fileContents.length() > 0) {
-      throw new RuntimeException("Scanner not implemented");
-    } else {
+      for (int idx = 0; idx < fileContents.length(); idx++) {
+        char c = fileContents.charAt(idx);
+        if (c == '(') {
+          System.out.println("LEFT_PAREN ( null");
+        } else if (c == ')') {
+          System.out.println("RIGHT_PAREN ) null");
+        }
+      }
+    } 
       System.out.println("EOF  null"); // Placeholder, remove this line when implementing the scanner
-    }
   }
 }
