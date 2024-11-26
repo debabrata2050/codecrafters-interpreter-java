@@ -13,6 +13,8 @@ public class Main {
     String command = args[0];
     String filename = args[1];
 
+    boolean hasErrors = false;
+
     if (!command.equals("tokenize")) {
       System.err.println("Unknown command: " + command);
       System.exit(1);
@@ -29,24 +31,6 @@ public class Main {
     if (fileContents.length() > 0) {
       for (int idx = 0; idx < fileContents.length(); idx++) {
         char c = fileContents.charAt(idx);
-        // if (c == '(') {
-        //   System.out.println("LEFT_PAREN ( null");
-        // } else if (c == ')') {
-        //   System.out.println("RIGHT_PAREN ) null");
-        // } else if (c == '{') {
-        //   System.out.println("LEFT_BRACE { null");
-        // } else if (c == '}') {`
-        //   System.out.println("RIGHT_BRACE } null");
-        // } else if (c == '*') {`
-        //   System.out.println("STAR * null");
-        // } else if (c == '.') {`
-        //   System.out.println("DOT . null");
-        // } else if (c == ',') {`
-        //   System.out.println("COMMA , null");
-        // } else if (c == '+') {`
-        //   System.out.println("PLUS + null");
-        // } 
-
         switch (c) {
           case '(' -> System.out.println("LEFT_PAREN ( null");
           case ')' -> System.out.println("RIGHT_PAREN ) null");
@@ -58,9 +42,21 @@ public class Main {
           case '+' -> System.out.println("PLUS + null");
           case '-' -> System.out.println("MINUS - null");
           case '*' -> System.out.println("STAR * null");
+
+          default -> 
+          {
+            System.err.printf("[line 1] Error: Unexpected character: %c%n", lineNumber + 1, c);
+            hasErrors = true;
+          }
         }
       }
     } 
       System.out.println("EOF  null");
+
+      if (hasErrors) {
+        System.exit(65);
+    } else {
+        System.exit(0);
+    }
   }
 }
