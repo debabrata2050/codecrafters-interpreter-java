@@ -43,9 +43,9 @@ public class Main {
           case '-' -> System.out.println("MINUS - null");
           case '*' -> System.out.println("STAR * null");
           case '=' -> {
-            if (idx + 1 < line.length() && line.charAt(idx + 1) == '=') {
+            if (idx + 1 < fileContents.length() && fileContents.charAt(idx + 1) == '=') {
               System.out.println("EQUAL_EQUAL == null");
-              idx++;
+              ++idx;
             } else {
               System.out.println("EQUAL = null");
             }
