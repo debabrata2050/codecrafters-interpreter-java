@@ -50,6 +50,14 @@ public class Main {
               System.out.println("EQUAL = null");
             }
           }
+          case '!' -> {
+            if (idx + 1 < fileContents.length() && fileContents.charAt(idx + 1) == '=') {
+              System.out.println("BANG_EQUAL != null");
+              ++idx;
+            } else {
+              System.out.println("BANG ! null");
+            }
+          }
           default -> {
             System.err.println("[line 1] Error: Unexpected character: " + c);
             hasErrors = true;
