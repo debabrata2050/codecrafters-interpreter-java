@@ -4,7 +4,7 @@ import java.nio.file.Path;
 
 public class Main {
   public static void main(String[] args) {
-   
+
     if (args.length < 2) {
       System.err.println("Usage: ./your_program.sh tokenize <filename>");
       System.exit(1);
@@ -42,21 +42,27 @@ public class Main {
           case '+' -> System.out.println("PLUS + null");
           case '-' -> System.out.println("MINUS - null");
           case '*' -> System.out.println("STAR * null");
-
-          default -> 
-          {
-            System.err.println("[line 1] Error: Unexpected character: "+ c);
+          case '=' -> {
+            if (idx + 1 < line.length() && line.charAt(idx + 1) == '=') {
+              System.out.println("EQUAL_EQUAL == null");
+              idx++;
+            } else {
+              System.out.println("EQUAL = null");
+            }
+          }
+          default -> {
+            System.err.println("[line 1] Error: Unexpected character: " + c);
             hasErrors = true;
           }
         }
       }
-    } 
-      System.out.println("EOF  null");
+    }
+    System.out.println("EOF  null");
 
-      if (hasErrors) {
-        System.exit(65);
+    if (hasErrors) {
+      System.exit(65);
     } else {
-        System.exit(0);
+      System.exit(0);
     }
   }
 }
