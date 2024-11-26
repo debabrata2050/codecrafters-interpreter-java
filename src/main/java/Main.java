@@ -74,6 +74,13 @@ public class Main {
               System.out.println("GREATER > null");
             }
           }
+          case '/' -> {
+            if (idx + 1 < fileContents.length() && fileContents.charAt(idx + 1) == '/') {
+              break;
+            } else {
+              System.out.println("SLASH / null");
+            }
+          }
           default -> {
             System.err.println("[line 1] Error: Unexpected character: " + c);
             hasErrors = true;
