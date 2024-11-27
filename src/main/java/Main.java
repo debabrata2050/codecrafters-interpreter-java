@@ -32,14 +32,14 @@ public class Main {
       for (int idx = 0; idx < fileContents.length(); idx++) {
         char c = fileContents.charAt(idx);
         
-        if(c==' ' || c=='\t' || c=='\n'){
-          continue;
-        }
-        
-        // if (Character.isWhitespace(c)) {
-        //   // Ignore whitespace characters using Character class
+        // if(c==' ' || c=='\t' || c=='\n'){
         //   continue;
         // }
+        
+        if (Character.isWhitespace(c)) {
+          // Ignore whitespace characters using Character class
+          continue;
+        }
 
         switch (c) {
           case '(' -> System.out.println("LEFT_PAREN ( null");
@@ -78,7 +78,7 @@ public class Main {
           }
           case '>' -> {
             if (idx + 
-                  System.out.println("GREATER_EQUAL >= null");
+                    System.out.println("GREATER_EQUAL >= null");
               ++idx;
             } else {
               System.out.println("GREATER > null");
