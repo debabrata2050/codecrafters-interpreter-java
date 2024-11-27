@@ -112,9 +112,8 @@ public class Main {
               System.err.println("[line " + lineNumber + "] Error: Unterminated string.");
               hasErrors = true;
             } else {
-              ++idx;
-              String lexeme = fileContents.substring(startIdx, idx); // Include quotes
-              String value = fileContents.substring(startIdx + 1, idx - 1); // Exclude quotes
+              String lexeme = fileContents.substring(startIdx, idx + 1); // Include quotes
+              String value = fileContents.substring(startIdx + 1, idx); // Exclude quotes
               System.out.println("STRING " + lexeme + " " + value);
             }
           }
