@@ -14,6 +14,7 @@ public class Main {
     String filename = args[1];
 
     boolean hasErrors = false;
+    int lineNumber = 1;
 
     if (!command.equals("tokenize")) {
       System.err.println("Unknown command: " + command);
@@ -34,8 +35,13 @@ public class Main {
 
         // if (Character.isWhitespace(c)) continue; // Ignore whitespace characters
         // using Character Class
-        if (c == ' ' || c == '\t' || c == '\n')
+        if (c == ' ' || c == '\t')
           continue;
+
+        if (c == '\n') {
+          ++lineNumber;
+          continue;
+        }
 
         switch (c) {
           case '(' -> System.out.println("LEFT_PAREN ( null");
@@ -90,7 +96,7 @@ public class Main {
             }
           }
           default -> {
-            System.err.println("[line 1] Error: Unexpected character: " + c);
+            System.err.println("[line " + lineNumber + "] Error: Unexpected character: " + c);
             hasErrors = true;
           }
         }
