@@ -45,15 +45,32 @@ public class Main {
           continue;
         }
 
+        // Check for number literals
         if (Character.isDigit(c)) {
           // Start scanning an integer or floating-point literal
           int startIdx = idx;
-          while (idx < fileContents.length()
-              && (Character.isDigit(fileContents.charAt(idx)) || fileContents.charAt(idx) == '.')) {
+          boolean isFloat = false;
+
+          while (idx < fileContents.length() && Character.isDigit(fileContents.charAt(idx))) {
             idx++;
           }
+
+          if (idx < fileContents.length() && fileContents.charAt(idx) == '.') {
+            isFloat = true; // It's a float
+            idx++; // Move past the decimal point
+
+            // Scan for fractional part
+            while (idx < fileContents.length() && Character.isDigit(fileContents.charAt(idx))) {
+              idx++;
+            }
+          }
+
           String number = fileContents.substring(startIdx, idx);
-          System.out.println("NUMBER " + number + " " + number);
+          if (isFloat) {
+            System.out.println("NUMBER " + number + " " + number);
+          } else {
+            System.out.println("NUMBER " + number + " " + number + ".0");
+          }
           continue;
         }
 
