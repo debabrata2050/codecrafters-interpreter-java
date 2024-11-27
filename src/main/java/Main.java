@@ -3,6 +3,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class Main {
+  private static int lineNumber = 1;
+
   public static void main(String[] args) {
 
     if (args.length < 2) {
@@ -14,7 +16,6 @@ public class Main {
     String filename = args[1];
 
     boolean hasErrors = false;
-    int lineNumber = 1;
 
     if (!command.equals("tokenize")) {
       System.err.println("Unknown command: " + command);
@@ -38,6 +39,7 @@ public class Main {
         if (c == ' ' || c == '\t')
           continue;
 
+        // For every new line we will count number
         if (c == '\n') {
           ++lineNumber;
           continue;
@@ -96,6 +98,22 @@ public class Main {
               System.out.println("SLASH / null");
             }
           }
+
+          case '"' -> {
+            int startIdx = idx;
+            while (idx < fileContents.length() && fileContents.charAt(idx) != '"') {
+              if (fileContents.charAt(idx) == '\n') ++lineNumber;
+              ++idx;
+            }
+            if (fileContents.charAt(idx) != '"') {
+              System.err.println("[line " + lineNumber + "] Error: Unterminated string.");
+              hasErrors = true;
+            }
+            else{
+              System.out.println("STRING \"" + fileContents.substring(startIdx + 1, idx) + "\" "+fileContents.substring(startIdx + 1, idx));
+            }
+          }
+
           default -> {
             System.err.println("[line " + lineNumber + "] Error: Unexpected character: " + c);
             hasErrors = true;
