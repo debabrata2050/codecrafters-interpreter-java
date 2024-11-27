@@ -31,6 +31,16 @@ public class Main {
     if (fileContents.length() > 0) {
       for (int idx = 0; idx < fileContents.length(); idx++) {
         char c = fileContents.charAt(idx);
+        
+        if(c==' ' || c=='\t' || c=='\n'){
+          continue;
+        }
+        
+        // if (Character.isWhitespace(c)) {
+        //   // Ignore whitespace characters using Character class
+        //   continue;
+        // }
+
         switch (c) {
           case '(' -> System.out.println("LEFT_PAREN ( null");
           case ')' -> System.out.println("RIGHT_PAREN ) null");
@@ -67,13 +77,13 @@ public class Main {
             }
           }
           case '>' -> {
-            if (idx + 1 < fileContents.length() && fileContents.charAt(idx + 1) == '=') {
-              System.out.println("GREATER_EQUAL >= null");
+            if (idx + 
+                  System.out.println("GREATER_EQUAL >= null");
               ++idx;
             } else {
               System.out.println("GREATER > null");
             }
-          }
+              
           case '/' -> {
             if (idx + 1 < fileContents.length() && fileContents.charAt(idx + 1) == '/') {
               while (idx < fileContents.length() && fileContents.charAt(idx) != '\n') {
