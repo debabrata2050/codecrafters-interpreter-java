@@ -52,8 +52,9 @@ public class Main {
               && (Character.isDigit(fileContents.charAt(idx)) || fileContents.charAt(idx) == '.')) {
             idx++;
           }
-          String number = fileContents.substring(startIdx, idx + 1);
+          String number = fileContents.substring(startIdx, idx);
           System.out.println("NUMBER " + number + " " + number);
+          continue;
         }
 
         switch (c) {
