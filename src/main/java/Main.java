@@ -48,12 +48,12 @@ public class Main {
         if (Character.isDigit(c)) {
           // Start scanning an integer or floating-point literal
           int startIdx = idx;
-          while (idx < fileContents.length() && (Character.isDigit(fileContents.charAt(idx)) || fileContents.charAt(idx) == '.')) {
+          while (idx < fileContents.length()
+              && (Character.isDigit(fileContents.charAt(idx)) || fileContents.charAt(idx) == '.')) {
             idx++;
           }
-            String number = fileContents.substring(startIdx, idx+1);
-            System.out.println("NUMBER " + number +" "+ number);
-          }
+          String number = fileContents.substring(startIdx, idx + 1);
+          System.out.println("NUMBER " + number + " " + number);
         }
 
         switch (c) {
@@ -143,4 +143,5 @@ public class Main {
     } else {
       System.exit(0);
     }
-  }}
+  }
+}
