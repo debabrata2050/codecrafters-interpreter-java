@@ -91,6 +91,7 @@ public class Main {
               while (idx < fileContents.length() && fileContents.charAt(idx) != '\n') {
                 idx++;
               }
+              ++lineNumber;
             } else {
               System.out.println("SLASH / null");
             }
