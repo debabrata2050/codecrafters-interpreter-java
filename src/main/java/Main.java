@@ -100,17 +100,20 @@ public class Main {
           }
 
           case '"' -> {
-            int startIdx = idx;
+            int startIdx = idx++;
             while (idx < fileContents.length() && fileContents.charAt(idx) != '"') {
-              if (fileContents.charAt(idx) == '\n') ++lineNumber;
+              if (fileContents.charAt(idx) == '\n')
+                ++lineNumber;
               ++idx;
             }
-            if (fileContents.charAt(idx) != '"') {
+            if (idx >= fileContents.length()) {
               System.err.println("[line " + lineNumber + "] Error: Unterminated string.");
               hasErrors = true;
-            }
-            else{
-              System.out.println("STRING \"" + fileContents.substring(startIdx + 1, idx) + "\" "+fileContents.substring(startIdx + 1, idx));
+            } else {
+              ++idx;
+              String lexeme = fileContents.substring(startIdx, idx); // Include quotes
+              String value = fileContents.substring(startIdx + 1, idx - 1); // Exclude quotes
+              System.out.println("STRING " + lexeme + " " + value);
             }
           }
 
