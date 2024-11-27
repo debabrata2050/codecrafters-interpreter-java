@@ -45,6 +45,17 @@ public class Main {
           continue;
         }
 
+        if (Character.isDigit(c)) {
+          // Start scanning an integer or floating-point literal
+          int startIdx = idx;
+          while (idx < fileContents.length() && (Character.isDigit(fileContents.charAt(idx)) || fileContents.charAt(idx) == '.')) {
+            idx++;
+          }
+            String number = fileContents.substring(startIdx, idx+1);
+            System.out.println("NUMBER " + number +" "+ number);
+          }
+        }
+
         switch (c) {
           case '(' -> System.out.println("LEFT_PAREN ( null");
           case ')' -> System.out.println("RIGHT_PAREN ) null");
@@ -132,5 +143,4 @@ public class Main {
     } else {
       System.exit(0);
     }
-  }
-}
+  }}
