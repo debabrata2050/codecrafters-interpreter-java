@@ -100,10 +100,12 @@ public class Main {
           }
 
           case '"' -> {
-            int startIdx = idx++;
+            int startIdx = idx;
+            idx++;
             while (idx < fileContents.length() && fileContents.charAt(idx) != '"') {
-              if (fileContents.charAt(idx) == '\n')
+              if (fileContents.charAt(idx) == '\n') {
                 ++lineNumber;
+              }
               ++idx;
             }
             if (idx >= fileContents.length()) {
