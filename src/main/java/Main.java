@@ -61,31 +61,20 @@ public class Main {
 
         // Check for number literals
         if (Character.isDigit(c)) {
-          // Start scanning an integer or floating-point literal
           int startIdx = idx;
-          boolean isFloat = false;
-
-          while (idx < fileContents.length() && (Character.isDigit(fileContents.charAt(idx)) || fileContents.charAt(idx) == '.')) {
-            if (fileContents.charAt(idx) == '.') {
-              isFloat = true; // It's a float
-            }
+          while (idx < fileContents.length() && 
+                 (Character.isDigit(fileContents.charAt(idx)) || fileContents.charAt(idx) == '.')) {
             idx++;
           }
-
-          // Extract the number
+          
           String number = fileContents.substring(startIdx, idx);
           idx--;
-          if (isFloat) {
-            int dotIndex = number.indexOf('.');
-            
-              String fractionalPart = removeTrailingZeroes(number.substring(dotIndex));
-              // Check if the modified number still contains a dot
-              if (fractionalPart.isEmpty()) {
-                System.out.println("NUMBER " + number + " " + number.substring(0, dotIndex) + ".0"); // Display original and modified number
-              } else {
-                System.out.println("NUMBER " + number + " " + number.substring(0, dotIndex) + fractionalPart); // Display original number with .0
-              }
-            
+          
+          int dotIndex = number.indexOf('.');
+          if (dotIndex != -1) {
+            String fractionalPart = removeTrailingZeroes(number.substring(dotIndex));
+            String result = number.substring(0, dotIndex) + (fractionalPart.isEmpty() ? ".0" : fractionalPart);
+            System.out.println("NUMBER " + number + " " + result);
           } else {
             System.out.println("NUMBER " + number + " " + number + ".0");
           }
