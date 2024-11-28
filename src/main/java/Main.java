@@ -59,6 +59,8 @@ public class Main {
           continue;
         }
 
+        
+
         // Check for number literals
         if (Character.isDigit(c)) {
           int startIdx = idx;
@@ -78,6 +80,19 @@ public class Main {
           } else {
             System.out.println("NUMBER " + number + " " + number + ".0");
           }
+          continue;
+        }
+
+        // Add identifier support
+        if (Character.isLetter(c) || c == '_') {
+          int startIdx = idx;
+          while (idx < fileContents.length() && 
+                 (Character.isLetterOrDigit(fileContents.charAt(idx)) || fileContents.charAt(idx) == '_')) {
+            idx++;
+          }
+          String identifier = fileContents.substring(startIdx, idx);
+          idx--; // Move back one position since the loop will increment
+          System.out.println("IDENTIFIER " + identifier + " null");
           continue;
         }
 
