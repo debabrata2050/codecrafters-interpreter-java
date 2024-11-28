@@ -74,18 +74,16 @@ public class Main {
 
           // Extract the number
           String number = fileContents.substring(startIdx, idx);
-          String originalNumber = number; // Make a copy of the original number
-
-          // If it's a float, remove trailing zeros from the fractional part
+          
           if (isFloat) {
             int dotIndex = number.indexOf('.');
             
               String fractionalPart = removeTrailingZeroes(number.substring(dotIndex));
               // Check if the modified number still contains a dot
-              if (!fractionalPart.isEmpty()) {
-                System.out.println("NUMBER " + originalNumber + " " + originalNumber.substring(0, dotIndex) + ".0"); // Display original and modified number
+              if (fractionalPart.isEmpty()) {
+                System.out.println("NUMBER " + number + " " + number.substring(0, dotIndex) + ".0"); // Display original and modified number
               } else {
-                System.out.println("NUMBER " + originalNumber + " " + originalNumber.substring(0, dotIndex) + fractionalPart); // Display original number with .0
+                System.out.println("NUMBER " + number + " " + number.substring(0, dotIndex) + fractionalPart); // Display original number with .0
               }
             
           } else {
