@@ -3,6 +3,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class Main {
+
+  private static String removeTrailingZeroes(String s) {
+    int index;
+    for (index = s.length() - 1; index >= 0; index--) {
+      if (s.charAt(index) != '0') {
+        break;
+      }
+    }
+    return s.substring(0, index + 1);
+  }
+
   private static int lineNumber = 1;
 
   public static void main(String[] args) {
@@ -51,22 +62,24 @@ public class Main {
           int startIdx = idx;
           boolean isFloat = false;
 
-          while (idx < fileContents.length() && Character.isDigit(fileContents.charAt(idx))) {
+          while (idx < fileContents.length() && (Character.isDigit(fileContents.charAt(idx)) || fileContents.charAt(idx) == '.')) {
+            if (fileContents.charAt(idx) == '.') {
+              isFloat = true; // It's a float
+            }
             idx++;
           }
 
-          if (idx < fileContents.length() && fileContents.charAt(idx) == '.') {
-            isFloat = true; // It's a float
-            idx++; // Move past the decimal point
-
-            // Scan for fractional part
-            while (idx < fileContents.length() && Character.isDigit(fileContents.charAt(idx))) {
-              idx++;
-            }
-          }
-
+          // Extract the number
           String number = fileContents.substring(startIdx, idx);
+
+          // If it's a float, remove trailing zeros from the fractional part
           if (isFloat) {
+            int dotIndex = number.indexOf('.');
+            if (dotIndex != -1) {
+              String fractionalPart = number.substring(dotIndex);
+              fractionalPart = removeTrailingZeroes(fractionalPart);
+              number = number.substring(0, dotIndex) + fractionalPart; // Reconstruct the number
+            }
             System.out.println("NUMBER " + number + " " + number);
           } else {
             System.out.println("NUMBER " + number + " " + number + ".0");
@@ -128,6 +141,7 @@ public class Main {
             }
           }
 
+          // Check String Literals
           case '"' -> {
             int startIdx = idx;
             idx++;
