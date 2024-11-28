@@ -74,7 +74,7 @@ public class Main {
 
           // Extract the number
           String number = fileContents.substring(startIdx, idx);
-          
+          idx--;
           if (isFloat) {
             int dotIndex = number.indexOf('.');
             
