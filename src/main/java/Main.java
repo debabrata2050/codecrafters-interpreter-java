@@ -1,9 +1,17 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Main {
   
+  private static final Set<String> keywords = new HashSet<>(Arrays.asList(
+      "and", "class", "else", "false", "for", "fun", "if", "nil", "or",
+      "print", "return", "super", "this", "true", "var", "while"
+  ));
+
   private static String removeTrailingZeroes(String s) {
     int index;
     for (index = s.length() - 1; index >= 0; index--) {
@@ -83,16 +91,21 @@ public class Main {
           continue;
         }
 
-        // Add identifier support
+        // Add identifier and keyword support
         if (Character.isLetter(c) || c == '_') {
           int startIdx = idx;
           while (idx < fileContents.length() && 
                  (Character.isLetterOrDigit(fileContents.charAt(idx)) || fileContents.charAt(idx) == '_')) {
             idx++;
           }
-          String identifier = fileContents.substring(startIdx, idx);
+          String text = fileContents.substring(startIdx, idx);
           idx--; // Move back one position since the loop will increment
-          System.out.println("IDENTIFIER " + identifier + " null");
+          
+          if (keywords.contains(text)) {
+            System.out.println(text.toUpperCase() + " " + text + " null");
+          } else {
+            System.out.println("IDENTIFIER " + text + " null");
+          }
           continue;
         }
 
