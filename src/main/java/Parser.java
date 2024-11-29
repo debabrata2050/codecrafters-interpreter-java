@@ -21,7 +21,7 @@ public class Parser {
     //< advance
     //> utils
       private boolean isAtEnd() {
-        return peek().getType() == "EOF";
+        return peek().getType().equals("EOF");
       }
     
       private Token peek() {
@@ -37,11 +37,11 @@ public class Parser {
         return;
       Token token = peek();
       if (token.getType().equals("TRUE")) {
-        System.out.println(token.getLiteral());
+        System.out.println("true");
       } else if (token.getType().equals("FALSE")) {
-        System.out.println(token.getLiteral());
+        System.out.println("false");
       } else if (token.getType().equals("NIL")) {
-        System.out.println(token.getLiteral());
+        System.out.println("nil");
       }
     }
   }
