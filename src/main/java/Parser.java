@@ -38,14 +38,27 @@ public class Parser {
       Token token = peek();
       if (token.getType().equals("TRUE")) {
         System.out.println("true");
+        advance();
       } else if (token.getType().equals("FALSE")) {
         System.out.println("false");
+        advance();
       } else if (token.getType().equals("NIL")) {
         System.out.println("nil");
+        advance();
       } else if (token.getType().equals("NUMBER")) {
         System.out.println(token.getLiteral());
+        advance();
       } else if (token.getType().equals("STRING")) {
         System.out.println(token.getLiteral());
+        advance();
+      } else if (token.getType().equals("LEFT_PAREN")) {
+        System.out.print("(");
+        advance();
+        doParse(); // recursively parse the contents inside parentheses
+        if (check(tokenList.get(current))) {
+          System.out.print(")");
+          advance();
+        }
       }
     }
   }
