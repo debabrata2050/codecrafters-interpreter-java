@@ -42,6 +42,8 @@ public class Parser {
         System.out.println("false");
       } else if (token.getType().equals("NIL")) {
         System.out.println("nil");
+      } else if (token.getType().equals("NUMBER")) {
+        System.out.println(token.getLiteral());
       }
     }
   }
