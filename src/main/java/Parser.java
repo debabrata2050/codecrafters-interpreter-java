@@ -31,34 +31,45 @@ public class Parser {
       private Token previous() {
         return tokenList.get(current - 1);
       }
+   
 
     public void doParse() {
-      if (isAtEnd())
-        return;
-      Token token = peek();
-      if (token.getType().equals("TRUE")) {
-        System.out.println("true");
-        advance();
-      } else if (token.getType().equals("FALSE")) {
-        System.out.println("false");
-        advance();
-      } else if (token.getType().equals("NIL")) {
-        System.out.println("nil");
-        advance();
-      } else if (token.getType().equals("NUMBER")) {
-        System.out.println(token.getLiteral());
-        advance();
-      } else if (token.getType().equals("STRING")) {
-        System.out.println(token.getLiteral());
-        advance();
-      } else if (token.getType().equals("LEFT_PAREN")) {
-        System.out.print("(");
-        advance();
-        doParse(); // recursively parse the contents inside parentheses
-        if (check(tokenList.get(current))) {
-          System.out.print(")");
-          advance();
+        while (!isAtEnd()) {
+            Token token = advance();
+            if (token.getType().equals("LEFT_PAREN")) {
+                parseGroup();
+            } else {
+                System.out.println(getLiteralValue(token));
+            }
         }
+    }
+
+    private void parseGroup() {
+      // Print the opening of the group
+      System.out.print("(group ");
+
+      // Process all tokens until we hit the closing parenthesis
+      while (!isAtEnd() && !check(new Token("RIGHT_PAREN", ")", null, current))) {
+          Token innerToken = advance();
+          System.out.print(getLiteralValue(innerToken));
       }
+
+      // Consume the closing parenthesis if present
+      if (check(new Token("RIGHT_PAREN", ")", null, current))) {
+          advance();
+      }
+
+      // Close the group
+      System.out.println(")");
+  }
+
+    private String getLiteralValue(Token token) {
+        return switch (token.getType()) {
+            case "TRUE" -> "true";
+            case "FALSE" -> "false";
+            case "NIL" -> "nil";
+            case "NUMBER", "STRING" -> token.getLiteral();
+            default -> "";
+        };
     }
   }
