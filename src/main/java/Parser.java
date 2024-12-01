@@ -78,12 +78,14 @@ public class Parser {
         Token operand = advance();
         if (operand.getType().equals("LEFT_PAREN")) {
             parseGroup();
+        } else if (operand.getType().equals("MINUS") || operand.getType().equals("BANG")) {
+            parseUnary(operand);  // Recursively handle nested unary operators
         } else {
             System.out.print(getLiteralValue(operand));
         }
 
         // Close the unary expression
-        System.out.println(")");
+        System.out.print(")");  // Changed from println to print for nested expressions
     }
 
     private String getOperatorSymbol(Token token) {
