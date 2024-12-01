@@ -39,6 +39,8 @@ public class Parser {
             if (token.getType().equals("LEFT_PAREN")) {
                 parseGroup();
                 System.out.println();
+            } else if (token.getType().equals("MINUS") || token.getType().equals("BANG")) {
+                parseUnary(token);
             } else {
                 System.out.println(getLiteralValue(token));
             }
@@ -66,6 +68,30 @@ public class Parser {
 
         // Close the group
         System.out.print(")");  // Changed from println to print for nested groups
+    }
+
+    private void parseUnary(Token operator) {
+        // Print the opening of the unary expression
+        System.out.print("(" + getOperatorSymbol(operator) + " ");
+
+        // Parse the operand
+        Token operand = advance();
+        if (operand.getType().equals("LEFT_PAREN")) {
+            parseGroup();
+        } else {
+            System.out.print(getLiteralValue(operand));
+        }
+
+        // Close the unary expression
+        System.out.println(")");
+    }
+
+    private String getOperatorSymbol(Token token) {
+        return switch (token.getType()) {
+            case "MINUS" -> "-";
+            case "BANG" -> "!";
+            default -> "";
+        };
     }
 
     private String getLiteralValue(Token token) {
