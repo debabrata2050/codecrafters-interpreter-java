@@ -38,6 +38,7 @@ public class Parser {
             Token token = advance();
             if (token.getType().equals("LEFT_PAREN")) {
                 parseGroup();
+                System.out.println();
             } else {
                 System.out.println(getLiteralValue(token));
             }
@@ -45,23 +46,27 @@ public class Parser {
     }
 
     private void parseGroup() {
-      // Print the opening of the group
-      System.out.print("(group ");
+        // Print the opening of the group
+        System.out.print("(group ");
 
-      // Process all tokens until we hit the closing parenthesis
-      while (!isAtEnd() && !check(new Token("RIGHT_PAREN", ")", null, current))) {
-          Token innerToken = advance();
-          System.out.print(getLiteralValue(innerToken));
-      }
+        // Process all tokens until we hit the closing parenthesis
+        while (!isAtEnd() && !check(new Token("RIGHT_PAREN", ")", null, current))) {
+            Token innerToken = advance();
+            if (innerToken.getType().equals("LEFT_PAREN")) {
+                parseGroup();  // Recursively handle nested groups
+            } else {
+                System.out.print(getLiteralValue(innerToken));
+            }
+        }
 
-      // Consume the closing parenthesis if present
-      if (check(new Token("RIGHT_PAREN", ")", null, current))) {
-          advance();
-      }
+        // Consume the closing parenthesis if present
+        if (check(new Token("RIGHT_PAREN", ")", null, current))) {
+            advance();
+        }
 
-      // Close the group
-      System.out.println(")");
-  }
+        // Close the group
+        System.out.print(")");  // Changed from println to print for nested groups
+    }
 
     private String getLiteralValue(Token token) {
         return switch (token.getType()) {
