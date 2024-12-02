@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Stack;
 
 public class Parser {
     private List<Token> tokenList;
@@ -31,9 +32,19 @@ public class Parser {
     }
 
     public void doParse() {
+        Stack<String> operands = new Stack<>();
+        Stack<Token> operators = new Stack<>();
+
         while (!isAtEnd()) {
             Token token = advance();
-            if (token.getType().equals("LEFT_PAREN")) {
+            if (token.getType().equals("NUMBER")) {
+                operands.push(getLiteralValue(token));
+            } else if (isBinaryOperator(token)) {
+                while (!operators.isEmpty() && hasPrecedence(token, operators.peek())) {
+                    processOperator(operands, operators);
+                }
+                operators.push(token);
+            }else if (token.getType().equals("LEFT_PAREN")) {
                 parseGroup();
                 System.out.println();
             } else if (isUnaryOperator(token)) {
@@ -43,6 +54,12 @@ public class Parser {
                 System.out.println(getLiteralValue(token));
             }
         }
+
+        while (!operators.isEmpty()) {
+            processOperator(operands, operators);
+        }
+
+        System.out.println(operands.pop());
     }
 
     private boolean isUnaryOperator(Token token) {
@@ -91,6 +108,30 @@ public class Parser {
         System.out.print(")");
     }
 
+    private void processOperator(Stack<String> operands, Stack<Token> operators) {
+        Token operator = operators.pop();
+        String right = operands.pop();
+        String left = operands.pop();
+        String result = "(" + getLiteralValue(operator) + " " + left + " " + right + ")";
+        operands.push(result);
+    }
+
+    private boolean hasPrecedence(Token current, Token top) {
+        // * and / have higher precedence than + and -
+        if ((current.getType().equals("STAR") || current.getType().equals("SLASH")) &&
+            (top.getType().equals("PLUS") || top.getType().equals("MINUS"))) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isBinaryOperator(Token token) {
+        return token.getType().equals("STAR") || 
+               token.getType().equals("SLASH") ||
+               token.getType().equals("PLUS") || 
+               token.getType().equals("MINUS");
+    }
+
     private String getLiteralValue(Token token) {
         return switch (token.getType()) {
             case "TRUE" -> "true";
@@ -99,6 +140,8 @@ public class Parser {
             case "NUMBER", "STRING" -> token.getLiteral();
             case "BANG" -> "!";
             case "MINUS" -> "-";
+            case "STAR" -> "*";
+            case "SLASH" -> "/";
             default -> "";
         };
     }
